@@ -288,14 +288,11 @@ def classify_intent(keyword: str) -> str:
     words = keyword.split()
     if len(words) >= 2:
         # Vérification des combinaisons de patterns
-        has_commercial_term = check_patterns(trans_patterns['comparison_terms'])
         has_verb = check_patterns(trans_patterns['verbs'])
         has_secondary = check_patterns(trans_patterns['secondary'])
         
-        # Si on a une combinaison de termes commerciaux et de verbes
-        if (has_commercial_term and has_verb) or \
-           (has_commercial_term and has_secondary) or \
-           (has_verb and has_secondary):
+        # Si on a une combinaison de verbes et de termes secondaires
+        if has_verb and has_secondary:
             return 'Transactionnel'
     
     # Vérification des autres intentions
