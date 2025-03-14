@@ -23,6 +23,7 @@ class AnalysisError(Exception):
 
 st.set_page_config(
     page_title="Analyse Content Gap",
+    page_icon="🔍",
     layout="wide",
     initial_sidebar_state="expanded"
 )
