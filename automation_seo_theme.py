@@ -238,6 +238,13 @@ def apply_automation_seo_theme() -> None:
                 transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
             }
 
+            .stButton > button *,
+            .stDownloadButton > button *,
+            [data-testid="stFormSubmitButton"] button * {
+                color: inherit !important;
+                -webkit-text-fill-color: inherit !important;
+            }
+
             .stButton > button:hover,
             .stDownloadButton > button:hover,
             [data-testid="stFormSubmitButton"] button:hover {
