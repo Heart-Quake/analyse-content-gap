@@ -10,6 +10,8 @@ import plotly.express as px
 from collections import Counter
 from urllib.parse import urlparse
 
+from automation_seo_theme import apply_automation_seo_theme
+
 # Classes d'exception personnalisées
 class FileProcessingError(Exception):
     """Exception levée lors d'une erreur de traitement de fichier"""
@@ -127,6 +129,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+apply_automation_seo_theme()
 
 def process_content_gap_file(file):
     """Traite le fichier content gap et retourne un DataFrame nettoyé"""
