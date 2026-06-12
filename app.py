@@ -1,8 +1,6 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import re
-import base64
 import importlib
 import json
 import unicodedata
@@ -1468,42 +1466,15 @@ def display_results_dataframe(df):
     st.dataframe(display_df, use_container_width=True, height=400, column_config=column_config)
 
 def render_copy_to_clipboard_button(text_to_copy: str, button_label: str, key: str):
-    """Affiche un bouton pour copier un texte dans le presse-papiers du navigateur"""
+    """Expose le TSV sans composant HTML custom pour préserver la stabilité Streamlit Cloud."""
     safe_key = re.sub(r'[^a-zA-Z0-9_-]', '_', str(key))
-    encoded_text = base64.b64encode(str(text_to_copy).encode('utf-8')).decode('ascii')
-
-    components.html(
-        f"""
-        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-            <button id="copy-btn-{safe_key}" style="
-                background:#F7F8F8;
-                color:#0F1011;
-                border:1px solid #F7F8F8;
-                border-radius:8px;
-                padding:8px 12px;
-                font-size:14px;
-                cursor:pointer;
-            ">{button_label}</button>
-            <span id="copy-status-{safe_key}" style="font-size:13px;color:#49DCBC;"></span>
-        </div>
-        <script>
-            const encoded = "{encoded_text}";
-            const bytes = Uint8Array.from(atob(encoded), c => c.charCodeAt(0));
-            const text = new TextDecoder().decode(bytes);
-            const btn = document.getElementById("copy-btn-{safe_key}");
-            const status = document.getElementById("copy-status-{safe_key}");
-            btn.addEventListener("click", async () => {{
-                try {{
-                    await navigator.clipboard.writeText(text);
-                    status.textContent = "Copié";
-                    setTimeout(() => status.textContent = "", 2000);
-                }} catch (error) {{
-                    status.textContent = "Copie impossible";
-                }}
-            }});
-        </script>
-        """,
-        height=48
+    st.download_button(
+        button_label.replace("📋 Copier", "Télécharger"),
+        data=str(text_to_copy),
+        file_name=f"{safe_key}.tsv",
+        mime="text/tab-separated-values",
+        key=f"download_{safe_key}",
+        help="Télécharge les données au format TSV, prêt à coller dans Sheets ou Excel.",
     )
 
 def dataframe_to_json_string(df: pd.DataFrame) -> str:
