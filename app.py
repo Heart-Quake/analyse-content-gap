@@ -2670,7 +2670,7 @@ def main():
         
         # Configuration dans la sidebar
         with st.sidebar:
-            st.image("DR SEO Header.svg", use_column_width=True)
+            st.image("logo-full-cream.png", use_container_width=True)
             st.header("⚙️ Configuration")
             
             uploaded_files = st.file_uploader(
