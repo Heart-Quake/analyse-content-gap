@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import re
 import base64
+import importlib
 import json
 import unicodedata
 from io import BytesIO
@@ -10,7 +11,10 @@ import plotly.express as px
 from collections import Counter
 from urllib.parse import urlparse
 
-from automation_seo_theme import apply_automation_seo_theme
+import automation_seo_theme
+
+automation_seo_theme = importlib.reload(automation_seo_theme)
+apply_automation_seo_theme = automation_seo_theme.apply_automation_seo_theme
 
 # Classes d'exception personnalisées
 class FileProcessingError(Exception):
